@@ -1,0 +1,990 @@
+﻿{
+  "paragraphs": [
+    {
+      "text": "%pyspark\nfrom pyspark.sql import SparkSession\nfrom pyspark.sql.functions import *\nfrom pyspark.sql.types import *\nfrom pyspark.sql.functions import concat, lpad, lit\nimport pandas as pd\nimport math\nimport numpy as np\nimport matplotlib.pyplot as plt\nimport seaborn as sns\nfrom scipy import stats",
+      "user": "anonymous",
+      "dateUpdated": "2025-11-11T11:18:09+0000",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/python",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1762835255378_406379865",
+      "id": "paragraph_1762835255378_406379865",
+      "dateCreated": "2025-11-11T04:27:35+0000",
+      "dateStarted": "2025-11-11T05:00:55+0000",
+      "dateFinished": "2025-11-11T05:00:59+0000",
+      "status": "FINISHED",
+      "focus": true,
+      "$$hashKey": "object:1075"
+    },
+    {
+      "user": "anonymous",
+      "dateUpdated": "2025-11-11T10:28:13+0000",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/python",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1762835710868_1968433737",
+      "id": "paragraph_1762835710868_1968433737",
+      "dateCreated": "2025-11-11T04:35:10+0000",
+      "status": "FINISHED",
+      "$$hashKey": "object:1076",
+      "dateFinished": "2025-11-11T10:28:13+0000",
+      "dateStarted": "2025-11-11T10:28:13+0000",
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "Spark версия: 3.0.3\nДоступно ядер: 2\nМастер URL: yarn\nExecutor instances: 2\nExecutor memory: 5530m\n"
+          }
+        ]
+      },
+      "text": "%pyspark\n\n# Проверка кластера\nprint(f\"Spark версия: {spark.version}\")\nprint(f\"Доступно ядер: {spark.sparkContext.defaultParallelism}\")\nprint(f\"Мастер URL: {spark.sparkContext.master}\")\n\n# Информация о кластере\nprint(f\"Executor instances: {spark.conf.get('spark.executor.instances', 'auto')}\")\nprint(f\"Executor memory: {spark.conf.get('spark.executor.memory', 'default')}\")"
+    },
+    {
+      "text": "%pyspark\n\nspark.conf.set(\"spark.sql.adaptive.enabled\", \"true\")\nspark.conf.set(\"spark.sql.adaptive.coalescePartitions.enabled\", \"true\")\nspark.conf.set(\"spark.sql.adaptive.skewJoin.enabled\", \"true\")\nspark.conf.set(\"spark.sql.adaptive.localShuffleReader.enabled\", \"true\")\nspark.conf.set(\"spark.sql.shuffle.partitions\", \"400\")\n",
+      "user": "anonymous",
+      "dateUpdated": "2025-11-11T11:10:18+0000",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1762845255154_1107730859",
+      "id": "paragraph_1762845255154_1107730859",
+      "dateCreated": "2025-11-11T07:14:15+0000",
+      "status": "FINISHED",
+      "focus": true,
+      "$$hashKey": "object:4838",
+      "dateFinished": "2025-11-11T10:28:15+0000",
+      "dateStarted": "2025-11-11T10:28:15+0000",
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      }
+    },
+    {
+      "text": "%pyspark\n\nbucket_name = 'sparkwrk'\n\ndf = spark.read.option(\"header\", True).csv(f's3a://{bucket_name}/bi_datasets/custom_1988_2020.csv')  # Датасет по трейдингу (Спасибо, Японскому правительству!)",
+      "user": "anonymous",
+      "dateUpdated": "2025-11-11T10:28:18+0000",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "https://ui-c9qh47kh72ued0ot83m6-rc1d-dataproc-d-5u64lhodphqnc5pl-39551.dataproc-ui.yandexcloud.net/jobs/job?id=195",
+              "$$hashKey": "object:21664"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1762838487549_218650773",
+      "id": "paragraph_1762838487549_218650773",
+      "dateCreated": "2025-11-11T05:21:27+0000",
+      "status": "FINISHED",
+      "focus": true,
+      "$$hashKey": "object:2365",
+      "dateFinished": "2025-11-11T10:28:18+0000",
+      "dateStarted": "2025-11-11T10:28:18+0000",
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      }
+    },
+    {
+      "text": "%pyspark\ndf.printSchema()",
+      "user": "anonymous",
+      "dateUpdated": "2025-11-11T10:28:20+0000",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1762838525445_1566922026",
+      "id": "paragraph_1762838525445_1566922026",
+      "dateCreated": "2025-11-11T05:22:05+0000",
+      "status": "FINISHED",
+      "focus": true,
+      "$$hashKey": "object:2493",
+      "dateFinished": "2025-11-11T10:28:20+0000",
+      "dateStarted": "2025-11-11T10:28:20+0000",
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "root\n |-- 198801: string (nullable = true)\n |-- 1: string (nullable = true)\n |-- 103: string (nullable = true)\n |-- 100: string (nullable = true)\n |-- 000000190: string (nullable = true)\n |-- 0: string (nullable = true)\n |-- 35843: string (nullable = true)\n |-- 34353: string (nullable = true)\n\n"
+          }
+        ]
+      }
+    },
+    {
+      "text": "%pyspark\n\ninitial_partitions = df.rdd.getNumPartitions()\n\nprint(f\"Исходное количество партиций: {initial_partitions}\")\n\nprint(\"Оригинальные колонки:\")\nall_columns = df.columns\nfor i, col_name in enumerate(all_columns):\n    print(f\"   {i}: '{col_name}'\")\n\nprint(f\"\\nВсего колонок: {len(all_columns)}\")\n\nrename_dict = {}\nfor col_name in all_columns:\n    if \"198801\" in str(col_name) or col_name == \"198801\":\n        rename_dict[col_name] = \"ym\"\n    elif col_name == \"1\":\n        rename_dict[col_name] = \"exp_imp\"  \n    elif col_name == \"103\":\n        rename_dict[col_name] = \"hs9\"\n    elif col_name == \"100\":\n        rename_dict[col_name] = \"customs\"\n    elif \"000000190\" in str(col_name) or col_name == \"000000190\":\n        rename_dict[col_name] = \"country\"\n    elif col_name == \"0\":\n        rename_dict[col_name] = \"q1\"\n    elif col_name == \"35843\":\n        rename_dict[col_name] = \"q2\"  \n    elif col_name == \"34353\":\n        rename_dict[col_name] = \"value_yen\"\n\nprint(f\"\\nСоответствия:\")\n\nfor old_name, new_name in rename_dict.items():\n    print(f\"   '{old_name}' -> '{new_name}'\")\n\ndf_processed = df.select([col(c).alias(rename_dict.get(c, c)) for c in df.columns])\n\n\nif initial_partitions * 2 > 200:\n    optimal_partitions = initial_partitions * 2\nelse:\n    optimal_partitions = 200\n\ndf_processed = df_processed.repartition(optimal_partitions)\nprint(f\"Оптимизированное количество партиций: {df_processed.rdd.getNumPartitions()}\")\n\n# Приводим типы данных\nif \"ym\" in df_processed.columns:\n    df_processed = df_processed.withColumn(\"ym\", col(\"ym\").cast(IntegerType()))\n    df_processed = df_processed.withColumn(\"year\", (col(\"ym\") / 100).cast(IntegerType()))\n    df_processed = df_processed.withColumn(\"month\", when((col(\"ym\") % 100) < 10, concat(lit(\"0\"), (col(\"ym\") % 100).cast(StringType()))).otherwise((col(\"ym\") % 100).cast(StringType())))\n\nif \"exp_imp\" in df_processed.columns:\n    df_processed = df_processed.withColumn(\"exp_imp\", col(\"exp_imp\").cast(StringType()))\n\nif \"hs9\" in df_processed.columns:\n    df_processed = df_processed.withColumn(\"hs9\", col(\"hs9\").cast(StringType()))\n\nif \"customs\" in df_processed.columns:\n    df_processed = df_processed.withColumn(\"customs\", col(\"customs\").cast(IntegerType()))\n\nif \"country\" in df_processed.columns:\n    df_processed = df_processed.withColumn(\"country\", col(\"country\").cast(StringType()))\n\nif \"q1\" in df_processed.columns:\n    df_processed = df_processed.withColumn(\"q1\", col(\"q1\").cast(LongType()))\n\nif \"q2\" in df_processed.columns:\n    df_processed = df_processed.withColumn(\"q2\", col(\"q2\").cast(LongType()))\n\nif \"value_yen\" in df_processed.columns:\n    df_processed = df_processed.withColumn(\"value_yen\", col(\"value_yen\").cast(LongType()))\n\ndf_processed.cache()\n\nprint(\"Схема после обработки:\")\ndf_processed.printSchema()\n\nprint(\"Образец данных:\")\navailable_cols = [col for col in [\"year\", \"month\", \"exp_imp\", \"hs9\", \"country\", \"q1\", \"q2\", \"value_yen\"] if col in df_processed.columns]\ndf_processed.select(*available_cols).show(5)",
+      "user": "anonymous",
+      "dateUpdated": "2025-11-11T11:11:55+0000",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "title": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "https://ui-c9qh47kh72ued0ot83m6-rc1d-dataproc-d-5u64lhodphqnc5pl-39551.dataproc-ui.yandexcloud.net/jobs/job?id=196",
+              "$$hashKey": "object:29050"
+            },
+            {
+              "jobUrl": "https://ui-c9qh47kh72ued0ot83m6-rc1d-dataproc-d-5u64lhodphqnc5pl-39551.dataproc-ui.yandexcloud.net/jobs/job?id=197",
+              "$$hashKey": "object:29051"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1762842822240_304282221",
+      "id": "paragraph_1762842822240_304282221",
+      "dateCreated": "2025-11-11T06:33:42+0000",
+      "status": "FINISHED",
+      "focus": true,
+      "$$hashKey": "object:3711",
+      "dateFinished": "2025-11-11T10:33:02+0000",
+      "dateStarted": "2025-11-11T10:28:23+0000",
+      "title": "Проверка и предобработка данных",
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "Исходное количество партиций: 34\nОригинальные колонки:\n   0: '198801'\n   1: '1'\n   2: '103'\n   3: '100'\n   4: '000000190'\n   5: '0'\n   6: '35843'\n   7: '34353'\n\nВсего колонок: 8\n\nСоответствия:\n   '198801' -> 'ym'\n   '1' -> 'exp_imp'\n   '103' -> 'hs9'\n   '100' -> 'customs'\n   '000000190' -> 'country'\n   '0' -> 'q1'\n   '35843' -> 'q2'\n   '34353' -> 'value_yen'\nОптимизированное количество партиций: 200\nСхема после обработки:\nroot\n |-- ym: integer (nullable = true)\n |-- exp_imp: string (nullable = true)\n |-- hs9: string (nullable = true)\n |-- customs: integer (nullable = true)\n |-- country: string (nullable = true)\n |-- q1: long (nullable = true)\n |-- q2: long (nullable = true)\n |-- value_yen: long (nullable = true)\n |-- year: integer (nullable = true)\n |-- month: string (nullable = true)\n\nОбразец данных:\n+----+-----+-------+---+---------+---+----+---------+\n|year|month|exp_imp|hs9|  country| q1|  q2|value_yen|\n+----+-----+-------+---+---------+---+----+---------+\n|1989|   02|      1|536|870422920|  0|   2|     5673|\n|1988|   12|      1|205|851730000|  2|4055|    85437|\n|1988|   05|      1|213|848330200|  0| 946|     5580|\n|1989|   04|      1|108|854121100|  0| 563|     3868|\n|1988|   05|      1|106|540743100|813|  80|      589|\n+----+-----+-------+---+---------+---+----+---------+\nonly showing top 5 rows\n\n"
+          }
+        ]
+      }
+    },
+    {
+      "text": "%pyspark\n\n\nfilters = []\n\nif \"year\" in df_processed.columns and \"month\" in df_processed.columns:\n    filters.append(col(\"year\").isNotNull() & col(\"month\").isNotNull())\n\nif \"exp_imp\" in df_processed.columns:\n    filters.append(col(\"exp_imp\").isNotNull() & (col(\"exp_imp\") != \"\"))\n\nif \"hs9\" in df_processed.columns:\n    filters.append(col(\"hs9\").isNotNull() & (col(\"hs9\") != \"\"))\n\nif \"country\" in df_processed.columns:\n    filters.append(col(\"country\").isNotNull() & (col(\"country\") != \"\"))\n\nif \"value_yen\" in df_processed.columns:\n    filters.append(col(\"value_yen\").isNotNull() & (col(\"value_yen\") > 0))\n\nif \"q1\" in df_processed.columns:\n    filters.append(col(\"q1\").isNotNull())\n\nif \"q2\" in df_processed.columns:\n    filters.append(col(\"q2\").isNotNull())\n\n# Объединяем все фильтры\ncombined_filter = filters[0]\nfor filter_condition in filters[1:]:\n    combined_filter = combined_filter & filter_condition\n\ndf_clean = df_processed.filter(combined_filter)\nprint(f\"После удаления пустых: {df_clean.count():,} записей\")\n\n# Фильтруем строки с цифрами в hs9\nif \"hs9\" in df_clean.columns:\n    df_with_digits = df_clean.filter(col(\"hs9\").rlike(\".*[0-9].*\"))\n    print(f\"После фильтрации строк с цифрами: {df_with_digits.count():,} записей\")\nelse:\n    df_with_digits = df_clean\n    print(\"Колонка hs9 не найдена\")\n\n# Поиск дублей\nkey_fields = [field for field in [\"year\", \"month\", \"exp_imp\", \"hs9\", \"country\", \"customs\"] if field in df_with_digits.columns]\nprint(f\"Ключевые поля для дедупликации: {key_fields}\")\n\nif len(key_fields) > 0:\n    if \"country\" in key_fields:\n        df_partitioned = df_with_digits.repartition(\"country\")\n        print(\"Данные перепартиционированы по country\")\n    else:\n        df_partitioned = df_with_digits\n    \n    print(\"Анализ дублей с параллелизмом...\")\n    duplicates = df_partitioned.groupBy(*key_fields).count().filter(col(\"count\") > 1).cache()\n    \n    duplicate_count = duplicates.count()\n    total_duplicate_records = duplicates.agg(sum(\"count\")).collect()[0][0] if duplicate_count > 0 else 0\n    \n    print(f\"Найдено групп дублей: {duplicate_count:,}\")\n    print(f\"Всего дублированных записей: {total_duplicate_records:,}\")\n    \n    if duplicate_count > 0:\n        print(\"Топ-10 дублей:\")\n        duplicates.orderBy(desc(\"count\")).show(10)\n    \n    df_deduplicated = df_partitioned.dropDuplicates(key_fields)\nelse:\n    df_deduplicated = df_with_digits\n\nfinal_count = df_deduplicated.count()\nprint(f\"Финальный датасет: {final_count:,} записей\")\nprint(f\"Финальное количество партиций: {df_deduplicated.rdd.getNumPartitions()}\")\n\ndf_deduplicated.cache()",
+      "user": "anonymous",
+      "dateUpdated": "2025-11-11T11:12:06+0000",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "title": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "https://ui-c9qh47kh72ued0ot83m6-rc1d-dataproc-d-5u64lhodphqnc5pl-39551.dataproc-ui.yandexcloud.net/jobs/job?id=198",
+              "$$hashKey": "object:29159"
+            },
+            {
+              "jobUrl": "https://ui-c9qh47kh72ued0ot83m6-rc1d-dataproc-d-5u64lhodphqnc5pl-39551.dataproc-ui.yandexcloud.net/jobs/job?id=199",
+              "$$hashKey": "object:29160"
+            },
+            {
+              "jobUrl": "https://ui-c9qh47kh72ued0ot83m6-rc1d-dataproc-d-5u64lhodphqnc5pl-39551.dataproc-ui.yandexcloud.net/jobs/job?id=200",
+              "$$hashKey": "object:29161"
+            },
+            {
+              "jobUrl": "https://ui-c9qh47kh72ued0ot83m6-rc1d-dataproc-d-5u64lhodphqnc5pl-39551.dataproc-ui.yandexcloud.net/jobs/job?id=201",
+              "$$hashKey": "object:29162"
+            },
+            {
+              "jobUrl": "https://ui-c9qh47kh72ued0ot83m6-rc1d-dataproc-d-5u64lhodphqnc5pl-39551.dataproc-ui.yandexcloud.net/jobs/job?id=202",
+              "$$hashKey": "object:29163"
+            },
+            {
+              "jobUrl": "https://ui-c9qh47kh72ued0ot83m6-rc1d-dataproc-d-5u64lhodphqnc5pl-39551.dataproc-ui.yandexcloud.net/jobs/job?id=203",
+              "$$hashKey": "object:29164"
+            },
+            {
+              "jobUrl": "https://ui-c9qh47kh72ued0ot83m6-rc1d-dataproc-d-5u64lhodphqnc5pl-39551.dataproc-ui.yandexcloud.net/jobs/job?id=204",
+              "$$hashKey": "object:29165"
+            },
+            {
+              "jobUrl": "https://ui-c9qh47kh72ued0ot83m6-rc1d-dataproc-d-5u64lhodphqnc5pl-39551.dataproc-ui.yandexcloud.net/jobs/job?id=205",
+              "$$hashKey": "object:29166"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1762839212974_1517587180",
+      "id": "paragraph_1762839212974_1517587180",
+      "dateCreated": "2025-11-11T05:33:32+0000",
+      "status": "FINISHED",
+      "focus": true,
+      "$$hashKey": "object:3161",
+      "dateFinished": "2025-11-11T10:36:45+0000",
+      "dateStarted": "2025-11-11T10:33:09+0000",
+      "title": "Очистка данных",
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "После удаления пустых: 113,607,321 записей\nПосле фильтрации строк с цифрами: 113,607,321 записей\nКлючевые поля для дедупликации: ['year', 'month', 'exp_imp', 'hs9', 'country', 'customs']\nДанные перепартиционированы по country\nАнализ дублей с параллелизмом...\nНайдено групп дублей: 0\nВсего дублированных записей: 0\nФинальный датасет: 113,607,321 записей\nФинальное количество партиций: 400\nDataFrame[ym: int, exp_imp: string, hs9: string, customs: int, country: string, q1: bigint, q2: bigint, value_yen: bigint, year: int, month: string]"
+          }
+        ]
+      }
+    },
+    {
+      "text": "%pyspark\n\n\nif \"year\" in df_deduplicated.columns and \"month\" in df_deduplicated.columns:\n    \n    df_time_partitioned = df_deduplicated.repartition(\"year\", \"month\")\n    print(f\"Данные перепартиционированы по времени: {df_time_partitioned.rdd.getNumPartitions()} партиций\")\n    \n    agg_expressions = []\n    \n    if \"exp_imp\" in df_deduplicated.columns:\n        agg_expressions.append(countDistinct(\"exp_imp\").alias(\"unique_exp_imp\"))\n    \n    if \"hs9\" in df_deduplicated.columns:\n        agg_expressions.append(countDistinct(\"hs9\").alias(\"unique_hs9\"))\n    \n    if \"country\" in df_deduplicated.columns:\n        agg_expressions.append(countDistinct(\"country\").alias(\"unique_countries\"))\n    \n    numeric_cols = [\"customs\", \"q1\", \"q2\", \"value_yen\"]\n    for col_name in numeric_cols:\n        if col_name in df_deduplicated.columns:\n            agg_expressions.extend([\n                avg(col_name).alias(f\"avg_{col_name}\"),\n                expr(f\"percentile_approx({col_name}, 0.5)\").alias(f\"median_{col_name}\")\n            ])\n    \n    agg_expressions.append(count(\"*\").alias(\"total_records\"))\n    \n    time_aggregation = df_time_partitioned.groupBy(\"year\", \"month\").agg(*agg_expressions).orderBy(\"year\", \"month\").cache()\n    \n    print(\"Агрегация по времени:\")\n    time_aggregation.show(50)\n    \n    print(f\"Результат агрегации: {time_aggregation.count():,} записей\")\n    print(f\"Партиций в результате: {time_aggregation.rdd.getNumPartitions()}\")\n    \nelse:\n    print(\"Временные колонки не найдены\")\n    time_aggregation = None",
+      "user": "anonymous",
+      "dateUpdated": "2025-11-11T11:12:52+0000",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "title": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "https://ui-c9qh47kh72ued0ot83m6-rc1d-dataproc-d-5u64lhodphqnc5pl-39551.dataproc-ui.yandexcloud.net/jobs/job?id=206",
+              "$$hashKey": "object:29287"
+            },
+            {
+              "jobUrl": "https://ui-c9qh47kh72ued0ot83m6-rc1d-dataproc-d-5u64lhodphqnc5pl-39551.dataproc-ui.yandexcloud.net/jobs/job?id=207",
+              "$$hashKey": "object:29288"
+            },
+            {
+              "jobUrl": "https://ui-c9qh47kh72ued0ot83m6-rc1d-dataproc-d-5u64lhodphqnc5pl-39551.dataproc-ui.yandexcloud.net/jobs/job?id=208",
+              "$$hashKey": "object:29289"
+            },
+            {
+              "jobUrl": "https://ui-c9qh47kh72ued0ot83m6-rc1d-dataproc-d-5u64lhodphqnc5pl-39551.dataproc-ui.yandexcloud.net/jobs/job?id=209",
+              "$$hashKey": "object:29290"
+            },
+            {
+              "jobUrl": "https://ui-c9qh47kh72ued0ot83m6-rc1d-dataproc-d-5u64lhodphqnc5pl-39551.dataproc-ui.yandexcloud.net/jobs/job?id=210",
+              "$$hashKey": "object:29291"
+            },
+            {
+              "jobUrl": "https://ui-c9qh47kh72ued0ot83m6-rc1d-dataproc-d-5u64lhodphqnc5pl-39551.dataproc-ui.yandexcloud.net/jobs/job?id=211",
+              "$$hashKey": "object:29292"
+            },
+            {
+              "jobUrl": "https://ui-c9qh47kh72ued0ot83m6-rc1d-dataproc-d-5u64lhodphqnc5pl-39551.dataproc-ui.yandexcloud.net/jobs/job?id=212",
+              "$$hashKey": "object:29293"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1762843180403_1163259939",
+      "id": "paragraph_1762843180403_1163259939",
+      "dateCreated": "2025-11-11T06:39:40+0000",
+      "status": "FINISHED",
+      "focus": true,
+      "$$hashKey": "object:3876",
+      "dateFinished": "2025-11-11T10:38:34+0000",
+      "dateStarted": "2025-11-11T10:37:11+0000",
+      "title": "Агрегация по времени",
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "Данные перепартиционированы по времени: 400 партиций\nАгрегация по времени:\n+----+-----+--------------+----------+----------------+------------------+--------------+------------------+---------+------------------+---------+------------------+----------------+-------------+\n|year|month|unique_exp_imp|unique_hs9|unique_countries|       avg_customs|median_customs|            avg_q1|median_q1|            avg_q2|median_q2|     avg_value_yen|median_value_yen|total_records|\n+----+-----+--------------+----------+----------------+------------------+--------------+------------------+---------+------------------+---------+------------------+----------------+-------------+\n|1988|   01|             2|       193|            9259| 287.0062136443462|           300|  7201.43687462441|        0|31194.349335169227|      520| 23242.78992631143|            2212|       171397|\n|1988|   02|             2|       195|            9352| 286.7902697564856|           300| 6922.772902439277|        0| 29021.52370055067|      510|23404.211233482452|            2202|       193582|\n|1988|   03|             2|       198|            9371|286.69207413894316|           300| 7280.028879928402|        0| 31160.34863299106|      513|23512.338446585123|            2232|       207826|\n|1988|   04|             2|       198|            9390| 290.2290014842011|           300| 7255.458251962661|        0|31499.621157676836|      546| 23423.18733156271|            2240|       204824|\n|1988|   05|             2|       198|            9333|  290.888335071078|           300|7650.5765785926815|        0|32582.823619764513|      547|22911.651323652823|            2276|       196615|\n|1988|   06|             2|       195|            9321|289.97927923948623|           300| 7667.277659172446|        0|33701.012235162474|      530| 23451.06021879003|            2240|       203757|\n|1988|   07|             2|       198|            9417|290.37185128653476|           300| 7599.055407696506|        0|31899.982905776484|      525|24814.730825150098|            2284|       207029|\n|1988|   08|             2|       196|            9393|  290.860161456358|           300| 7444.863436882779|        0|31681.210444916193|      549| 24080.45384111473|            2329|       203027|\n|1988|   09|             2|       196|            9433| 289.9260047281324|           300| 7583.220277898394|        0|32078.568393882375|      537| 24983.78757659092|            2329|       207270|\n|1988|   10|             2|       196|            9452|289.43674511268836|           300| 7754.704682815628|        0|  31274.0925212877|      530|24824.136997978985|            2315|       208806|\n|1988|   11|             2|       197|            9421|289.69070486496935|           300| 7815.364070728055|        0|31441.323890042997|      529|23490.666872795788|            2252|       206990|\n|1988|   12|             2|       195|            9457|291.12094074666055|           300| 7572.622518552346|        0|31137.804740267155|      546| 23808.14823153328|            2322|       218975|\n|1989|   01|             2|       193|            9268|290.25597674978656|           300| 7816.681989841714|        0|34177.914940779825|      551|24418.001641964227|            2356|       182708|\n|1989|   02|             2|       196|            9349| 289.1910756530931|           300| 6856.690224996225|        0| 31698.61143604973|      524|24272.342140232548|            2312|       198670|\n|1989|   03|             2|       199|            9520| 290.4024722648347|           300| 7641.028110896196|        0| 35209.14156828742|      550|26398.195011005137|            2434|       224895|\n|1989|   04|             2|       198|            9386|  291.619101085856|           300| 7493.932151991056|        0| 32773.31584351773|      524|24817.733478242095|            2325|       208407|\n|1989|   05|             2|       200|            9447| 291.8370466345567|           300| 8275.083964735375|        0|33890.833882582694|      550| 24919.86663098893|            2396|       213018|\n|1989|   06|             2|       197|            9523|  290.480060494741|           300| 7968.387307984027|        0| 33730.35087863585|      535| 26219.09392219755|            2425|       218862|\n|1989|   07|             2|       202|            9512|  291.021672955287|           300| 8264.392915732487|        0| 32882.93051985928|      529|26395.818222416652|            2451|       219444|\n|1989|   08|             2|       200|            9513|291.24171298869743|           300| 8231.414424680377|        0| 33703.09173614971|      540|26175.770863442653|            2451|       215880|\n|1989|   09|             2|       202|            9517| 290.3194682307647|           300| 8053.487647933339|        0| 30629.85389450472|      526|27178.602135572233|            2459|       221299|\n|1989|   10|             2|       198|            9581|  290.441884128162|           300| 7931.906300125745|        0| 30435.65633456116|      522|26239.181316899125|            2406|       225059|\n|1989|   11|             2|       198|            9546| 290.6240219517496|           300| 7345.362566108817|        0|31470.908538904587|      515|26250.721242664637|            2387|       220848|\n|1989|   12|             2|       199|            9574| 291.1506051001915|           300| 7194.312204213799|        0| 29326.16947958807|      520|26631.244483667877|            2450|       232854|\n|1990|   01|             2|       199|            9417|290.43040217507524|           300| 6699.513316735147|        0|30342.077644890458|      513| 27228.22946229004|            2479|       196407|\n|1990|   02|             2|       201|            9492|290.34276859985556|           300| 6705.100883099937|        0|32016.430715101244|      507|26370.505384812546|            2470|       214585|\n|1990|   03|             2|       204|            9648| 290.9591016934259|           300| 7709.132214425294|        0| 31188.35040986179|      504|28035.050526606494|            2493|       238983|\n|1990|   04|             2|       200|            9584| 293.0381945500937|           300| 7122.558878374678|        0| 32595.85360277146|      519|27524.065839632443|            2587|       230059|\n|1990|   05|             2|       198|            9632| 292.2500693373087|           300| 7461.105241033819|        0|32906.275182443795|      514|27213.179717970495|            2557|       230756|\n|1990|   06|             2|       200|            9566| 290.9359429835935|           300| 7820.975364348322|        0|31448.754715350173|      510|26919.220260014175|            2506|       231372|\n|1990|   07|             2|       195|            9646|291.43438999987336|           300| 8039.794391181921|        0|32090.859289842407|      500|27221.860590095283|            2525|       236877|\n|1990|   08|             2|       198|            9584|  291.768665925393|           300| 8003.740270782916|        0| 34276.17073713127|      516| 26903.16768046744|            2551|       229335|\n|1990|   09|             2|       200|            9520| 291.1723683521547|           300| 8151.626922137085|        0| 34332.41488052642|      506| 27913.33393695565|            2504|       229172|\n|1990|   10|             2|       200|            9671| 291.4345382637762|           300| 8129.605434559234|        0|  33873.2613017275|      531| 28166.15329416156|            2505|       238437|\n|1990|   11|             2|       197|            9605| 291.9496819523733|           300| 7837.824697713449|        0|32548.432905646594|      529|27467.723396392128|            2473|       229997|\n|1990|   12|             2|       196|            9615| 292.6421135009803|           300| 8196.117788591624|        0| 32781.90238815787|      530| 27962.00015402099|            2548|       240227|\n|1991|   01|             2|       192|            9445|292.92675694618026|           300| 8073.309650889807|        0| 34670.56618292139|      540|28322.782309724407|            2593|       204033|\n|1991|   02|             2|       196|            9489| 290.9578779537216|           300|  7798.72599093329|        0|32288.186598893462|      525|26704.431699871904|            2544|       220146|\n|1991|   03|             2|       195|            9616|292.03616560280875|           300| 8284.411994806647|        0|34188.537582920384|      514|28316.106517990956|            2572|       239537|\n|1991|   04|             2|       197|            9501|294.14317294905055|           300| 8349.823998779131|        0| 33299.99218208376|      517|25139.301262290435|            2513|       229345|\n|1991|   05|             2|       197|            9592| 294.1382078696694|           300| 8343.513877412346|        0| 35073.97489608194|      543|25859.647936948688|            2568|       238409|\n|1991|   06|             2|       196|            9554| 292.8100070158627|           300| 7973.097426376221|        0| 33240.55014202844|      518|25961.803252109035|            2512|       233756|\n|1991|   07|             2|       195|            9619|293.19201887829536|           300| 8620.890040542048|        0| 35144.64505663902|      519|26742.816936740353|            2532|       241971|\n|1991|   08|             2|       191|            9565| 293.7458294266839|           300| 7923.332250273285|        0| 34644.41980530843|      523|25988.632855605916|            2522|       231443|\n|1991|   09|             2|       196|            9540| 292.8100769553419|           300| 8276.005906472295|        0| 34299.62880817661|      526|  26591.2859802604|            2542|       233642|\n|1991|   10|             2|       201|            9704|293.28407139849037|           300| 8135.211810392303|        0|  35227.8216940944|      523|26517.677662055783|            2464|       246952|\n|1991|   11|             2|       200|            9653|293.28208881972205|           300| 7931.628177001841|        0| 35907.06200265948|      520| 26137.69639209205|            2437|       238393|\n|1991|   12|             2|       202|            9623|294.69854522661444|           300| 7573.540220325859|        0|  36837.8839008083|      521|25981.122568037594|            2483|       244093|\n|1992|   01|             2|       201|            9368| 293.1526842944936|           300| 7989.120908893525|        0| 38521.72669945531|      539|26280.251158773164|            2513|       211862|\n|1992|   02|             2|       209|            9473| 293.5894803806589|           300| 7442.626546589173|        0|34413.396238418165|      509|25003.754211872438|            2427|       231073|\n+----+-----+--------------+----------+----------------+------------------+--------------+------------------+---------+------------------+---------+------------------+----------------+-------------+\nonly showing top 50 rows\n\nРезультат агрегации: 396 записей\nПартиций в результате: 396\n"
+          }
+        ]
+      }
+    },
+    {
+      "text": "%pyspark\n\nif time_aggregation is not None:\n    df_for_join = df_deduplicated.repartition(\"year\", \"month\")\n    time_agg_for_join = time_aggregation.repartition(\"year\", \"month\")\n    \n    print(\"Данные перепартиционированы для оптимального join\")\n    \n    df_with_metrics = df_for_join.join(time_agg_for_join, [\"year\", \"month\"], \"left\").cache()\n    \n    print(f\"Датасет с метриками: {df_with_metrics.count():,} записей\")\n    print(f\"Партиций после join: {df_with_metrics.rdd.getNumPartitions()}\")\n    \n    print(\"Образец данных с метриками:\")\n    sample_cols = [col for col in [\"year\", \"month\", \"value_yen\", \"unique_countries\", \"avg_value_yen\"] if col in df_with_metrics.columns]\n    df_with_metrics.select(*sample_cols).show(10)\n    \n    null_metrics_count = df_with_metrics.filter(col(\"total_records\").isNull()).count()\n    print(f\"Записей без метрик: {null_metrics_count:,}\")\n    \nelse:\n    df_with_metrics = df_deduplicated\n    print(\"Используем данные без временных метрик\")",
+      "user": "anonymous",
+      "dateUpdated": "2025-11-11T10:39:27+0000",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "https://ui-c9qh47kh72ued0ot83m6-rc1d-dataproc-d-5u64lhodphqnc5pl-39551.dataproc-ui.yandexcloud.net/jobs/job?id=213",
+              "$$hashKey": "object:22460"
+            },
+            {
+              "jobUrl": "https://ui-c9qh47kh72ued0ot83m6-rc1d-dataproc-d-5u64lhodphqnc5pl-39551.dataproc-ui.yandexcloud.net/jobs/job?id=214",
+              "$$hashKey": "object:22461"
+            },
+            {
+              "jobUrl": "https://ui-c9qh47kh72ued0ot83m6-rc1d-dataproc-d-5u64lhodphqnc5pl-39551.dataproc-ui.yandexcloud.net/jobs/job?id=215",
+              "$$hashKey": "object:22462"
+            },
+            {
+              "jobUrl": "https://ui-c9qh47kh72ued0ot83m6-rc1d-dataproc-d-5u64lhodphqnc5pl-39551.dataproc-ui.yandexcloud.net/jobs/job?id=216",
+              "$$hashKey": "object:22463"
+            },
+            {
+              "jobUrl": "https://ui-c9qh47kh72ued0ot83m6-rc1d-dataproc-d-5u64lhodphqnc5pl-39551.dataproc-ui.yandexcloud.net/jobs/job?id=217",
+              "$$hashKey": "object:22464"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1762843458689_1305328348",
+      "id": "paragraph_1762843458689_1305328348",
+      "dateCreated": "2025-11-11T06:44:18+0000",
+      "status": "FINISHED",
+      "focus": true,
+      "$$hashKey": "object:4007",
+      "dateFinished": "2025-11-11T10:41:39+0000",
+      "dateStarted": "2025-11-11T10:39:27+0000",
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "Данные перепартиционированы для оптимального join\nДатасет с метриками: 113,607,321 записей\nПартиций после join: 400\nОбразец данных с метриками:\n+----+-----+---------+----------------+------------------+\n|year|month|value_yen|unique_countries|     avg_value_yen|\n+----+-----+---------+----------------+------------------+\n|1992|   03|      241|            9508|26568.135744202675|\n|1992|   03|     2575|            9508|26568.135744202675|\n|1992|   03|     5913|            9508|26568.135744202675|\n|1992|   03|     2147|            9508|26568.135744202675|\n|1992|   03|     2158|            9508|26568.135744202675|\n|1992|   03|    12922|            9508|26568.135744202675|\n|1992|   03|    53288|            9508|26568.135744202675|\n|1992|   03|    10214|            9508|26568.135744202675|\n|1992|   03|     1963|            9508|26568.135744202675|\n|1992|   03|      898|            9508|26568.135744202675|\n+----+-----+---------+----------------+------------------+\nonly showing top 10 rows\n\nЗаписей без метрик: 0\n"
+          }
+        ]
+      }
+    },
+    {
+      "text": "%pyspark\n\n\nnumeric_column = \"value_yen\"\n\nif numeric_column in df_with_metrics.columns:\n    \n    numeric_data = df_with_metrics.select(numeric_column).filter(col(numeric_column).isNotNull()).cache()\n    \n    print(f\"\\nАнализ колонки: {numeric_column}\")\n    print(f\"Количество записей: {numeric_data.count():,}\")\n    \n    # 1. Гистограмма - подготовка данных\n    \n    histogram_sample = numeric_data.sample(0.01, seed=42).cache()\n    sample_count = histogram_sample.count()\n    print(f\"\\nРазмер выборки для гистограммы: {sample_count:,}\")\n    \n    hist_stats = histogram_sample.agg(\n        min(numeric_column).alias(\"min_val\"),\n        max(numeric_column).alias(\"max_val\"),\n        avg(numeric_column).alias(\"mean_val\"),\n        stddev(numeric_column).alias(\"std_val\")\n    ).collect()[0]\n    \n    print(f\"Диапазон: [{hist_stats['min_val']:,}, {hist_stats['max_val']:,}]\")\n    print(f\"Среднее: {hist_stats['mean_val']:,.2f}\")\n    print(f\"Стандартное отклонение: {hist_stats['std_val']:,.2f}\")\n    \n    hist_data = histogram_sample.rdd.map(lambda row: float(row[0])).histogram(50)\n    bins = hist_data[0]\n    frequencies = hist_data[1]\n    \n    print(f\"Гистограмма создана: {len(bins)-1} интервалов\")\n    print(\"Первые 10 интервалов и частот:\")\n    \n    num_to_show = 10\n    if len(frequencies) < 10:\n        num_to_show = len(frequencies)\n    \n    for i in range(num_to_show):\n        print(f\"   [{bins[i]:,.0f}, {bins[i+1]:,.0f}): {frequencies[i]:,}\")\n    \n    # 2. 95% доверительный интервал\n    \n    print(f\"\\n2. 95% доверительный интервал для {numeric_column}:\")\n    \n    full_stats = numeric_data.agg(\n        count(numeric_column).alias(\"n\"),\n        avg(numeric_column).alias(\"mean\"),\n        stddev(numeric_column).alias(\"stddev\")\n    ).collect()[0]\n    \n    n = full_stats[\"n\"]\n    mean_val = full_stats[\"mean\"]\n    std_val = full_stats[\"stddev\"]\n    \n    print(f\"Полная выборка: n={n:,}, mean={mean_val:.2f}, std={std_val:.2f}\")\n    \n    \n    print(f\"\\nМетодика расчета доверительного интервала:\")\n    print(f\"Размер выборки: n={n:,}\")\n    \n    if n >= 30:\n        print(\"n >= 30\")\n        print(\"Используем нормальное распределение с z-критическим значением\")\n        print(\"Для 95%: z = 1.96\")\n        \n        z_critical = 1.96\n        margin_error = z_critical * (std_val / math.sqrt(n))\n        ci_lower = mean_val - margin_error\n        ci_upper = mean_val + margin_error\n        \n        method = \"ЦПТ + нормальное распределение\"\n        \n    else:\n        print(\"n < 30 \") \n        print(\"df = n-1\")\n        print(\"4. Для 95%: t-критическое ≈ 2.0\")\n        \n        t_critical = 2.0\n        margin_error = t_critical * (std_val / math.sqrt(n))\n        ci_lower = mean_val - margin_error\n        ci_upper = mean_val + margin_error\n        \n        method = \"t-распределение\"\n    \n    print(f\"\\nРезультат 95% доверительного интервала:\")\n    print(f\"   Метод: {method}\")\n    print(f\"   Интервал: [{ci_lower:,.2f}, {ci_upper:,.2f}]\")\n    print(f\"   Ширина интервала: {ci_upper - ci_lower:,.2f}\")\n    print(f\"   Погрешность: ±{margin_error:,.2f}\")\n    \n    print(f\"\\nС вероятностью 95% истинное среднее значение {numeric_column}\")\n    print(f\"находится в интервале [{ci_lower:,.2f}, {ci_upper:,.2f}]\")",
+      "user": "anonymous",
+      "dateUpdated": "2025-11-11T11:16:46+0000",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "title": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "https://ui-c9qh47kh72ued0ot83m6-rc1d-dataproc-d-5u64lhodphqnc5pl-39551.dataproc-ui.yandexcloud.net/jobs/job?id=228",
+              "$$hashKey": "object:29597"
+            },
+            {
+              "jobUrl": "https://ui-c9qh47kh72ued0ot83m6-rc1d-dataproc-d-5u64lhodphqnc5pl-39551.dataproc-ui.yandexcloud.net/jobs/job?id=229",
+              "$$hashKey": "object:29598"
+            },
+            {
+              "jobUrl": "https://ui-c9qh47kh72ued0ot83m6-rc1d-dataproc-d-5u64lhodphqnc5pl-39551.dataproc-ui.yandexcloud.net/jobs/job?id=230",
+              "$$hashKey": "object:29599"
+            },
+            {
+              "jobUrl": "https://ui-c9qh47kh72ued0ot83m6-rc1d-dataproc-d-5u64lhodphqnc5pl-39551.dataproc-ui.yandexcloud.net/jobs/job?id=231",
+              "$$hashKey": "object:29600"
+            },
+            {
+              "jobUrl": "https://ui-c9qh47kh72ued0ot83m6-rc1d-dataproc-d-5u64lhodphqnc5pl-39551.dataproc-ui.yandexcloud.net/jobs/job?id=232",
+              "$$hashKey": "object:29601"
+            },
+            {
+              "jobUrl": "https://ui-c9qh47kh72ued0ot83m6-rc1d-dataproc-d-5u64lhodphqnc5pl-39551.dataproc-ui.yandexcloud.net/jobs/job?id=233",
+              "$$hashKey": "object:29602"
+            },
+            {
+              "jobUrl": "https://ui-c9qh47kh72ued0ot83m6-rc1d-dataproc-d-5u64lhodphqnc5pl-39551.dataproc-ui.yandexcloud.net/jobs/job?id=234",
+              "$$hashKey": "object:29603"
+            },
+            {
+              "jobUrl": "https://ui-c9qh47kh72ued0ot83m6-rc1d-dataproc-d-5u64lhodphqnc5pl-39551.dataproc-ui.yandexcloud.net/jobs/job?id=235",
+              "$$hashKey": "object:29604"
+            },
+            {
+              "jobUrl": "https://ui-c9qh47kh72ued0ot83m6-rc1d-dataproc-d-5u64lhodphqnc5pl-39551.dataproc-ui.yandexcloud.net/jobs/job?id=236",
+              "$$hashKey": "object:29605"
+            },
+            {
+              "jobUrl": "https://ui-c9qh47kh72ued0ot83m6-rc1d-dataproc-d-5u64lhodphqnc5pl-39551.dataproc-ui.yandexcloud.net/jobs/job?id=237",
+              "$$hashKey": "object:29606"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1762851264252_1251998819",
+      "id": "paragraph_1762851264252_1251998819",
+      "dateCreated": "2025-11-11T08:54:24+0000",
+      "status": "FINISHED",
+      "focus": true,
+      "$$hashKey": "object:6808",
+      "dateFinished": "2025-11-11T10:44:32+0000",
+      "dateStarted": "2025-11-11T10:44:13+0000",
+      "title": "Аналитические метрики для числовой колонки",
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "\nАнализ колонки: value_yen\nКоличество записей: 113,607,321\n\nРазмер выборки для гистограммы: 1,134,792\nДиапазон: [201, 127,426,704]\nСреднее: 32,508.81\nСтандартное отклонение: 395,233.07\nГистограмма создана: 50 интервалов\nПервые 10 интервалов и частот:\n   [201, 2,548,731): 1,133,269\n   [2,548,731, 5,097,261): 923\n   [5,097,261, 7,645,791): 287\n   [7,645,791, 10,194,321): 124\n   [10,194,321, 12,742,851): 52\n   [12,742,851, 15,291,381): 31\n   [15,291,381, 17,839,911): 25\n   [17,839,911, 20,388,441): 18\n   [20,388,441, 22,936,972): 20\n   [22,936,972, 25,485,502): 8\n\n2. 95% доверительный интервал для value_yen:\nПолная выборка: n=113,607,321, mean=32408.30, std=376908.21\n\nМетодика расчета доверительного интервала:\nРазмер выборки: n=113,607,321\nn >= 30\nИспользуем нормальное распределение с z-критическим значением\nДля 95%: z = 1.96\n\nРезультат 95% доверительного интервала:\n   Метод: ЦПТ + нормальное распределение\n   Интервал: [32,338.99, 32,477.61]\n   Ширина интервала: 138.62\n   Погрешность: ±69.31\n\nС вероятностью 95% истинное среднее значение value_yen\nнаходится в интервале [32,338.99, 32,477.61]\n"
+          }
+        ]
+      }
+    },
+    {
+      "text": "\n",
+      "user": "anonymous",
+      "dateUpdated": "2025-11-11T10:09:19+0000",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1762855712917_911710984",
+      "id": "paragraph_1762855712917_911710984",
+      "dateCreated": "2025-11-11T10:08:32+0000",
+      "status": "PENDING",
+      "focus": true,
+      "$$hashKey": "object:12597",
+      "dateFinished": "2025-11-11T10:09:19+0000",
+      "dateStarted": "2025-11-11T10:09:19+0000",
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "Попытка установки Plotly через conda...\nОшибка установки: [Errno 2] No such file or directory: 'conda'\n✗ Plotly не найден\n"
+          }
+        ]
+      }
+    },
+    {
+      "text": "%pyspark\n\n\nif time_aggregation is not None and f\"avg_{numeric_column}\" in time_aggregation.columns:\n    \n    # Подготавливаем данные для графика\n    monthly_avg_data = time_aggregation.select(\"year\", \"month\", f\"avg_{numeric_column}\", \"total_records\").orderBy(\"year\", \"month\")\n    \n    \n    chart_data = monthly_avg_data.withColumn(\"period\", \n                                            concat(col(\"year\").cast(\"string\"), \n                                                  lit(\"-\"), \n                                                  lpad(col(\"month\"), 2, \"0\")))\n    \n    # Собираем данные\n    rows = chart_data.collect()\n    \n    print(\"%table period\\taverage_value\\ttotal_records\")\n    for row in rows:\n        period = row.period\n        avg_val = getattr(row, f\"avg_{numeric_column}\")\n        total = row.total_records\n        print(f\"{period}\\t{avg_val:.2f}\\t{total}\")\n    \n    print(f\"\\nПодготовлено {len(rows)} точек для графика\")\n\nelse:\n    print(\"Данные для графика среднего значения не найдены\")",
+      "user": "anonymous",
+      "dateUpdated": "2025-11-11T11:16:00+0000",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "text",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/text",
+        "fontSize": 9,
+        "title": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "scatterChart",
+              "height": 300,
+              "optionOpen": false,
+              "setting": {
+                "multiBarChart": {
+                  "rotate": {
+                    "degree": "-45"
+                  },
+                  "xLabelStatus": "default"
+                },
+                "stackedAreaChart": {
+                  "rotate": {
+                    "degree": "-45"
+                  },
+                  "xLabelStatus": "default"
+                },
+                "lineChart": {
+                  "rotate": {
+                    "degree": "-45"
+                  },
+                  "xLabelStatus": "default"
+                },
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "period": "string",
+                      "average_value": "string",
+                      "total_records": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                }
+              },
+              "commonSetting": {},
+              "keys": [],
+              "groups": [],
+              "values": []
+            },
+            "helium": {}
+          },
+          "1": {
+            "graph": {
+              "mode": "lineChart",
+              "height": 300,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "period": "string",
+                      "average": "string",
+                      "ci_lower": "string",
+                      "ci_upper": "string",
+                      "margin_error": "string",
+                      "total_records": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                },
+                "multiBarChart": {
+                  "rotate": {
+                    "degree": "-45"
+                  },
+                  "xLabelStatus": "default"
+                },
+                "lineChart": {
+                  "rotate": {
+                    "degree": "-45"
+                  },
+                  "xLabelStatus": "default"
+                },
+                "stackedAreaChart": {
+                  "rotate": {
+                    "degree": "-45"
+                  },
+                  "xLabelStatus": "default"
+                }
+              },
+              "commonSetting": {},
+              "keys": [],
+              "groups": [],
+              "values": []
+            },
+            "helium": {}
+          }
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "https://ui-c9qh47kh72ued0ot83m6-rc1d-dataproc-d-5u64lhodphqnc5pl-39551.dataproc-ui.yandexcloud.net/jobs/job?id=238",
+              "$$hashKey": "object:29592"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1762851323690_1321226712",
+      "id": "paragraph_1762851323690_1321226712",
+      "dateCreated": "2025-11-11T08:55:23+0000",
+      "status": "FINISHED",
+      "focus": true,
+      "$$hashKey": "object:6877",
+      "dateFinished": "2025-11-11T10:44:45+0000",
+      "dateStarted": "2025-11-11T10:44:43+0000",
+      "title": "График среднего значения денежэных вложений в Йенах (тыс.) по месяцам",
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "period\taverage_value\ttotal_records\n1988-01\t23242.79\t171397\n1988-02\t23404.21\t193582\n1988-03\t23512.34\t207826\n1988-04\t23423.19\t204824\n1988-05\t22911.65\t196615\n1988-06\t23451.06\t203757\n1988-07\t24814.73\t207029\n1988-08\t24080.45\t203027\n1988-09\t24983.79\t207270\n1988-10\t24824.14\t208806\n1988-11\t23490.67\t206990\n1988-12\t23808.15\t218975\n1989-01\t24418.00\t182708\n1989-02\t24272.34\t198670\n1989-03\t26398.20\t224895\n1989-04\t24817.73\t208407\n1989-05\t24919.87\t213018\n1989-06\t26219.09\t218862\n1989-07\t26395.82\t219444\n1989-08\t26175.77\t215880\n1989-09\t27178.60\t221299\n1989-10\t26239.18\t225059\n1989-11\t26250.72\t220848\n1989-12\t26631.24\t232854\n1990-01\t27228.23\t196407\n1990-02\t26370.51\t214585\n1990-03\t28035.05\t238983\n1990-04\t27524.07\t230059\n1990-05\t27213.18\t230756\n1990-06\t26919.22\t231372\n1990-07\t27221.86\t236877\n1990-08\t26903.17\t229335\n1990-09\t27913.33\t229172\n1990-10\t28166.15\t238437\n1990-11\t27467.72\t229997\n1990-12\t27962.00\t240227\n1991-01\t28322.78\t204033\n1991-02\t26704.43\t220146\n1991-03\t28316.11\t239537\n1991-04\t25139.30\t229345\n1991-05\t25859.65\t238409\n1991-06\t25961.80\t233756\n1991-07\t26742.82\t241971\n1991-08\t25988.63\t231443\n1991-09\t26591.29\t233642\n1991-10\t26517.68\t246952\n1991-11\t26137.70\t238393\n1991-12\t25981.12\t244093\n1992-01\t26280.25\t211862\n1992-02\t25003.75\t231073\n1992-03\t26568.14\t244725\n1992-04\t26009.63\t242478\n1992-05\t24595.22\t232426\n1992-06\t25295.68\t239395\n1992-07\t25487.19\t245396\n1992-08\t24977.79\t230107\n1992-09\t26251.72\t242307\n1992-10\t25261.49\t245752\n1992-11\t24870.62\t232048\n1992-12\t25418.55\t246714\n1993-01\t25576.88\t209949\n1993-02\t24639.57\t228041\n1993-03\t26333.00\t250519\n1993-04\t24513.10\t239816\n1993-05\t22678.91\t225361\n1993-06\t23394.72\t235651\n1993-07\t23833.01\t238937\n1993-08\t22443.88\t226267\n1993-09\t23906.16\t236546\n1993-10\t22986.79\t238451\n1993-11\t22932.56\t232358\n1993-12\t23408.04\t243637\n1994-01\t23795.96\t215801\n1994-02\t23186.95\t227149\n1994-03\t24844.31\t250273\n1994-04\t23599.37\t242341\n1994-05\t22051.74\t232501\n1994-06\t23723.17\t246648\n1994-07\t23183.58\t243500\n1994-08\t23280.65\t241829\n1994-09\t24023.34\t249308\n1994-10\t23763.09\t249974\n1994-11\t23448.16\t250618\n1994-12\t24058.68\t257848\n1995-01\t23752.85\t217357\n1995-02\t23493.27\t249778\n1995-03\t24882.19\t270325\n1995-04\t23299.99\t257791\n1995-05\t21504.68\t249993\n1995-06\t22562.19\t258734\n1995-07\t22390.45\t254857\n1995-08\t22877.97\t255915\n1995-09\t24869.48\t262042\n1995-10\t24801.69\t265329\n1995-11\t24846.77\t263051\n1995-12\t25428.46\t271651\n1996-01\t24997.76\t239698\n1996-02\t25044.77\t263712\n1996-03\t25942.41\t273816\n1996-04\t25285.66\t275809\n1996-05\t24091.34\t273243\n1996-06\t24411.90\t270129\n1996-07\t25233.77\t283413\n1996-08\t24056.77\t272736\n1996-09\t25338.02\t275152\n1996-10\t25769.18\t289595\n1996-11\t25883.62\t280752\n1996-12\t26002.31\t286881\n1997-01\t27214.08\t261156\n1997-02\t26572.19\t274726\n1997-03\t28174.21\t293896\n1997-04\t27543.20\t292150\n1997-05\t25919.43\t288330\n1997-06\t25502.22\t285455\n1997-07\t26206.20\t294712\n1997-08\t25311.81\t282603\n1997-09\t26784.89\t290593\n1997-10\t26961.94\t303616\n1997-11\t26260.04\t281307\n1997-12\t27489.41\t297339\n1998-01\t27785.24\t263206\n1998-02\t25605.31\t269899\n1998-03\t27144.84\t292574\n1998-04\t26032.81\t286971\n1998-05\t24903.40\t275726\n1998-06\t26279.05\t284612\n1998-07\t27105.59\t288221\n1998-08\t25871.74\t275863\n1998-09\t26837.30\t285109\n1998-10\t25625.91\t288645\n1998-11\t23803.66\t271727\n1998-12\t23941.23\t286129\n1999-01\t24023.62\t255879\n1999-02\t23496.60\t266222\n1999-03\t25120.34\t290918\n1999-04\t24459.96\t286598\n1999-05\t23100.48\t272813\n1999-06\t24427.52\t287025\n1999-07\t24707.68\t291286\n1999-08\t24100.51\t281190\n1999-09\t24857.82\t288278\n1999-10\t24609.87\t288355\n1999-11\t24819.64\t286696\n1999-12\t25185.42\t295000\n2000-01\t24869.78\t261559\n2000-02\t25189.07\t281644\n2000-03\t27194.52\t305019\n2000-04\t26018.35\t292670\n2000-05\t24957.18\t285605\n2000-06\t26305.03\t295830\n2000-07\t26122.08\t291935\n2000-08\t26663.19\t292667\n2000-09\t27304.00\t295386\n2000-10\t27870.54\t296495\n2000-11\t27317.94\t291770\n2000-12\t28000.12\t301619\n2001-01\t27565.72\t266504\n2001-02\t26545.36\t283254\n2001-03\t28983.18\t308132\n2001-04\t27174.36\t294335\n2001-05\t26056.18\t289960\n2001-06\t25806.30\t291340\n2001-07\t26299.57\t291150\n2001-08\t25435.17\t288975\n2001-09\t25382.95\t286917\n2001-10\t26053.99\t295010\n2001-11\t25290.75\t288129\n2001-12\t25006.79\t290458\n2002-01\t25923.15\t268058\n2002-02\t25912.43\t280406\n2002-03\t27272.14\t303910\n2002-04\t26601.42\t299775\n2002-05\t25891.40\t296903\n2002-06\t26009.42\t293738\n2002-07\t26395.09\t304911\n2002-08\t25412.95\t295008\n2002-09\t26569.77\t295391\n2002-10\t27401.14\t306819\n2002-11\t27749.66\t302339\n2002-12\t27543.35\t302832\n2003-01\t27203.76\t278887\n2003-02\t26806.76\t288074\n2003-03\t28221.20\t306572\n2003-04\t27632.03\t303614\n2003-05\t26646.16\t296981\n2003-06\t27128.68\t295596\n2003-07\t27976.47\t303726\n2003-08\t26841.90\t293618\n2003-09\t28824.44\t299029\n2003-10\t28507.37\t306284\n2003-11\t27713.00\t292459\n2003-12\t28845.98\t304839\n2004-01\t28573.49\t282085\n2004-02\t28219.40\t288441\n2004-03\t30790.77\t317181\n2004-04\t29763.79\t307013\n2004-05\t28935.63\t294558\n2004-06\t30686.50\t307556\n2004-07\t30580.73\t310205\n2004-08\t29859.35\t301347\n2004-09\t31420.84\t308024\n2004-10\t31644.54\t309373\n2004-11\t31811.59\t305332\n2004-12\t30962.84\t311855\n2005-01\t30182.21\t286084\n2005-02\t29283.85\t293969\n2005-03\t32635.97\t319936\n2005-04\t32094.30\t313486\n2005-05\t30847.35\t301669\n2005-06\t32243.79\t313178\n2005-07\t32790.35\t311421\n2005-08\t33344.77\t310016\n2005-09\t34815.11\t313244\n2005-10\t34919.99\t315100\n2005-11\t35937.47\t312563\n2005-12\t36675.14\t320812\n2006-01\t35821.72\t290375\n2006-02\t35397.81\t304799\n2006-03\t38434.23\t330153\n2006-04\t36805.03\t316454\n2006-05\t35744.22\t309155\n2006-06\t36781.20\t319232\n2006-07\t37196.80\t316968\n2006-08\t38267.99\t315909\n2006-09\t39303.67\t321856\n2006-10\t39329.79\t319899\n2006-11\t38787.40\t318436\n2006-12\t39168.88\t327010\n2007-01\t39736.38\t299563\n2007-02\t38268.86\t310193\n2007-03\t40848.51\t328612\n2007-04\t38732.00\t319218\n2007-05\t39920.76\t319136\n2007-06\t40970.93\t325258\n2007-07\t41434.89\t324467\n2007-08\t41544.66\t320756\n2007-09\t40746.95\t316644\n2007-10\t42550.26\t329341\n2007-11\t42638.45\t322544\n2007-12\t42798.56\t327137\n2008-01\t42965.53\t300775\n2008-02\t41486.61\t313632\n2008-03\t43745.50\t326141\n2008-04\t41306.86\t322469\n2008-05\t41774.25\t317718\n2008-06\t44545.37\t318780\n2008-07\t46362.52\t327141\n2008-08\t46066.06\t312966\n2008-09\t46280.67\t316150\n2008-10\t43719.30\t318048\n2008-11\t37126.28\t292906\n2008-12\t34507.15\t289308\n2009-01\t30650.28\t258516\n2009-02\t27741.05\t251912\n2009-03\t30844.65\t271457\n2009-04\t31020.07\t268872\n2009-05\t29662.00\t261564\n2009-06\t31556.60\t275753\n2009-07\t33003.43\t282405\n2009-08\t32121.63\t275652\n2009-09\t34382.92\t282150\n2009-10\t33748.44\t290875\n2009-11\t33983.95\t282812\n2009-12\t34965.83\t294025\n2010-01\t35293.65\t276500\n2010-02\t33787.48\t284603\n2010-03\t36547.11\t302867\n2010-04\t36655.40\t301463\n2010-05\t35197.86\t292861\n2010-06\t36636.22\t301994\n2010-07\t36653.95\t304993\n2010-08\t35129.88\t294785\n2010-09\t36409.20\t299511\n2010-10\t35316.90\t301056\n2010-11\t36151.24\t296587\n2010-12\t37509.68\t306706\n2011-01\t37021.20\t281931\n2011-02\t36139.23\t291679\n2011-03\t37187.56\t310483\n2011-04\t35459.26\t304322\n2011-05\t35847.97\t289536\n2011-06\t38086.94\t301541\n2011-07\t38381.45\t299462\n2011-08\t38820.65\t295946\n2011-09\t39034.50\t298681\n2011-10\t37771.81\t299082\n2011-11\t37606.02\t294729\n2011-12\t37908.16\t302206\n2012-01\t37403.46\t281204\n2012-02\t36971.29\t293724\n2012-03\t39714.13\t314463\n2012-04\t38545.65\t302193\n2012-05\t37628.02\t302478\n2012-06\t36857.77\t304620\n2012-07\t36432.74\t306125\n2012-08\t36058.25\t301103\n2012-09\t37238.91\t303018\n2012-10\t35526.76\t305466\n2012-11\t36199.57\t301755\n2012-12\t36992.77\t303920\n2013-01\t39083.54\t287340\n2013-02\t38047.75\t298043\n2013-03\t40655.14\t317239\n2013-04\t39651.20\t313456\n2013-05\t40017.16\t312909\n2013-06\t39242.92\t313375\n2013-07\t40485.25\t319856\n2013-08\t39909.54\t314101\n2013-09\t40837.05\t315526\n2013-10\t41132.76\t323498\n2013-11\t40822.11\t320873\n2013-12\t41894.01\t322851\n2014-01\t43311.15\t307056\n2014-02\t39736.77\t312166\n2014-03\t42667.64\t333196\n2014-04\t39613.19\t327161\n2014-05\t37570.21\t322842\n2014-06\t39149.30\t324759\n2014-07\t40432.40\t330190\n2014-08\t38559.68\t320616\n2014-09\t41689.92\t329244\n2014-10\t41963.60\t336396\n2014-11\t41130.05\t322729\n2014-12\t43395.78\t332963\n2015-01\t42392.52\t317090\n2015-02\t38407.75\t320444\n2015-03\t40392.07\t337443\n2015-04\t39538.50\t332736\n2015-05\t36575.01\t319647\n2015-06\t39373.46\t331957\n2015-07\t40404.23\t336280\n2015-08\t37892.63\t325338\n2015-09\t39314.54\t329341\n2015-10\t38398.45\t337977\n2015-11\t37767.89\t326863\n2015-12\t37539.88\t333958\n2016-01\t36491.46\t311253\n2016-02\t34545.32\t323316\n2016-03\t35987.70\t338135\n2016-04\t33214.65\t330211\n2016-05\t32278.63\t316966\n2016-06\t34470.76\t329677\n2016-07\t33652.40\t325455\n2016-08\t33297.68\t320365\n2016-09\t35077.55\t326457\n2016-10\t34364.23\t327647\n2016-11\t36014.58\t326709\n2016-12\t37982.39\t334943\n2017-01\t38311.84\t311833\n2017-02\t36437.55\t326304\n2017-03\t39637.41\t349481\n2017-04\t36568.36\t333133\n2017-05\t36316.49\t327885\n2017-06\t37740.24\t338702\n2017-07\t37313.24\t337217\n2017-08\t37314.96\t333920\n2017-09\t38184.49\t339603\n2017-10\t38787.01\t337929\n2017-11\t41319.07\t332409\n2017-12\t42063.50\t338811\n2018-01\t41599.72\t315765\n2018-02\t39973.33\t323702\n2018-03\t41075.95\t340345\n2018-04\t39398.59\t330560\n2018-05\t40087.47\t330056\n2018-06\t40199.64\t332836\n2018-07\t41337.19\t331983\n2018-08\t42052.82\t328722\n2018-09\t40718.05\t326871\n2018-10\t43108.42\t346642\n2018-11\t43288.01\t337121\n2018-12\t42003.15\t335673\n2019-01\t40419.14\t311063\n2019-02\t38776.78\t320864\n2019-03\t40868.29\t339799\n2019-04\t39920.82\t332398\n2019-05\t39526.26\t319815\n2019-06\t38499.39\t326812\n2019-07\t40518.03\t334192\n2019-08\t38815.73\t320222\n2019-09\t39532.83\t325478\n2019-10\t39809.09\t330105\n2019-11\t39167.65\t327985\n2019-12\t40432.73\t329222\n2020-01\t39936.10\t304897\n2020-02\t37293.47\t309072\n2020-03\t39192.40\t324212\n2020-04\t38431.30\t295239\n2020-05\t33806.10\t272965\n2020-06\t34598.23\t289366\n2020-07\t36604.07\t293705\n2020-08\t35551.12\t287985\n2020-09\t38109.48\t300194\n2020-10\t39055.39\t314250\n2020-11\t38533.39\t308079\n2020-12\t39610.22\t319832\nПодготовлено 396 точек для графика\nСкопируйте строки выше (начиная с %table) в новую ячейку Zeppelin\nЗатем нажмите на иконку графика и выберите 'Line Chart'\n"
+          }
+        ]
+      }
+    },
+    {
+      "text": "%pyspark\n\n\ndf_sample1, df_sample2, df_sample3 = df_with_metrics.randomSplit([0.25, 0.25, 0.5], seed=42)\n\ndf_sample1.cache()\ndf_sample2.cache() \ndf_sample3.cache()\n\ncount1 = df_sample1.count()\ncount2 = df_sample2.count()\ncount3 = df_sample3.count()\ntotal = count1 + count2 + count3\n\nprint(f\"РАЗДЕЛЕНИЕ ДАТАСЕТА:\")\nprint(f\"   Выборка 1: {count1:,} записей ({count1/total*100:.1f}%)\")\nprint(f\"   Выборка 2: {count2:,} записей ({count2/total*100:.1f}%)\")\nprint(f\"   Выборка 3: {count3:,} записей ({count3/total*100:.1f}%)\")\nprint(f\"   Всего: {total:,} записей\")\n\nprint(f\"Партиции в выборках:\")\nprint(f\"   Выборка 1: {df_sample1.rdd.getNumPartitions()} партиций\")\nprint(f\"   Выборка 2: {df_sample2.rdd.getNumPartitions()} партиций\")\nprint(f\"   Выборка 3: {df_sample3.rdd.getNumPartitions()} партиций\")\n\nprint(\"\\nРаспределение по годам в выборках:\")\nfor i, df_sample in enumerate([df_sample1, df_sample2, df_sample3], 1):\n    if \"year\" in df_sample.columns:\n        year_dist = df_sample.groupBy(\"year\").count().orderBy(\"year\")\n        print(f\"\\nВыборка {i} - топ-10 годов:\")\n        year_dist.show(10)",
+      "user": "anonymous",
+      "dateUpdated": "2025-11-11T11:17:28+0000",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "title": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "https://ui-c9qh47kh72ued0ot83m6-rc1d-dataproc-d-5u64lhodphqnc5pl-39551.dataproc-ui.yandexcloud.net/jobs/job?id=239",
+              "$$hashKey": "object:29863"
+            },
+            {
+              "jobUrl": "https://ui-c9qh47kh72ued0ot83m6-rc1d-dataproc-d-5u64lhodphqnc5pl-39551.dataproc-ui.yandexcloud.net/jobs/job?id=240",
+              "$$hashKey": "object:29864"
+            },
+            {
+              "jobUrl": "https://ui-c9qh47kh72ued0ot83m6-rc1d-dataproc-d-5u64lhodphqnc5pl-39551.dataproc-ui.yandexcloud.net/jobs/job?id=241",
+              "$$hashKey": "object:29865"
+            },
+            {
+              "jobUrl": "https://ui-c9qh47kh72ued0ot83m6-rc1d-dataproc-d-5u64lhodphqnc5pl-39551.dataproc-ui.yandexcloud.net/jobs/job?id=242",
+              "$$hashKey": "object:29866"
+            },
+            {
+              "jobUrl": "https://ui-c9qh47kh72ued0ot83m6-rc1d-dataproc-d-5u64lhodphqnc5pl-39551.dataproc-ui.yandexcloud.net/jobs/job?id=243",
+              "$$hashKey": "object:29867"
+            },
+            {
+              "jobUrl": "https://ui-c9qh47kh72ued0ot83m6-rc1d-dataproc-d-5u64lhodphqnc5pl-39551.dataproc-ui.yandexcloud.net/jobs/job?id=244",
+              "$$hashKey": "object:29868"
+            },
+            {
+              "jobUrl": "https://ui-c9qh47kh72ued0ot83m6-rc1d-dataproc-d-5u64lhodphqnc5pl-39551.dataproc-ui.yandexcloud.net/jobs/job?id=245",
+              "$$hashKey": "object:29869"
+            },
+            {
+              "jobUrl": "https://ui-c9qh47kh72ued0ot83m6-rc1d-dataproc-d-5u64lhodphqnc5pl-39551.dataproc-ui.yandexcloud.net/jobs/job?id=246",
+              "$$hashKey": "object:29870"
+            },
+            {
+              "jobUrl": "https://ui-c9qh47kh72ued0ot83m6-rc1d-dataproc-d-5u64lhodphqnc5pl-39551.dataproc-ui.yandexcloud.net/jobs/job?id=247",
+              "$$hashKey": "object:29871"
+            },
+            {
+              "jobUrl": "https://ui-c9qh47kh72ued0ot83m6-rc1d-dataproc-d-5u64lhodphqnc5pl-39551.dataproc-ui.yandexcloud.net/jobs/job?id=248",
+              "$$hashKey": "object:29872"
+            },
+            {
+              "jobUrl": "https://ui-c9qh47kh72ued0ot83m6-rc1d-dataproc-d-5u64lhodphqnc5pl-39551.dataproc-ui.yandexcloud.net/jobs/job?id=249",
+              "$$hashKey": "object:29873"
+            },
+            {
+              "jobUrl": "https://ui-c9qh47kh72ued0ot83m6-rc1d-dataproc-d-5u64lhodphqnc5pl-39551.dataproc-ui.yandexcloud.net/jobs/job?id=250",
+              "$$hashKey": "object:29874"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1762843468241_1622882992",
+      "id": "paragraph_1762843468241_1622882992",
+      "dateCreated": "2025-11-11T06:44:28+0000",
+      "status": "FINISHED",
+      "focus": true,
+      "$$hashKey": "object:4076",
+      "dateFinished": "2025-11-11T10:58:05+0000",
+      "dateStarted": "2025-11-11T10:46:22+0000",
+      "title": "Случайное разделение датасета на 3 части",
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "РАЗДЕЛЕНИЕ ДАТАСЕТА:\n   Выборка 1: 28,400,169 записей (25.0%)\n   Выборка 2: 28,398,220 записей (25.0%)\n   Выборка 3: 56,808,932 записей (50.0%)\n   Всего: 113,607,321 записей\nПартиции в выборках:\n   Выборка 1: 400 партиций\n   Выборка 2: 400 партиций\n   Выборка 3: 400 партиций\n\nРаспределение по годам в выборках:\n\nВыборка 1 - топ-10 годов:\n+----+------+\n|year| count|\n+----+------+\n|1988|607806|\n|1989|646055|\n|1990|687152|\n|1991|700025|\n|1992|710963|\n|1993|700231|\n|1994|726643|\n|1995|770391|\n|1996|821124|\n|1997|860062|\n+----+------+\nonly showing top 10 rows\n\n\nВыборка 2 - топ-10 годов:\n+----+------+\n|year| count|\n+----+------+\n|1988|607351|\n|1989|644485|\n|1990|685484|\n|1991|699642|\n|1992|710620|\n|1993|703180|\n|1994|727163|\n|1995|768046|\n|1996|821652|\n|1997|860649|\n+----+------+\nonly showing top 10 rows\n\n\nВыборка 3 - топ-10 годов:\n+----+-------+\n|year|  count|\n+----+-------+\n|1988|1214941|\n|1989|1291404|\n|1990|1373571|\n|1991|1402053|\n|1992|1422700|\n|1993|1402122|\n|1994|1453984|\n|1995|1538386|\n|1996|1642160|\n|1997|1725172|\n+----+-------+\nonly showing top 10 rows\n\n"
+          }
+        ]
+      }
+    },
+    {
+      "text": "%pyspark\n\n# Данные конкурента\ncompetitor_successes = 5\ncompetitor_failures = 995\n\n# Данные компании\nour_failures = 200\n\n# Априорное распределение на основе данных конкурента\nalpha_prior = competitor_successes\nbeta_prior = competitor_failures\n\n# Апостериорное распределение после наших наблюдений\nalpha_posterior = alpha_prior + 0 \nbeta_posterior = beta_prior + our_failures\n\n# Вероятность успеха следующего прототипа\nprobability_success = alpha_posterior / (alpha_posterior + beta_posterior)\n\nprint(f\"Вероятность успеха 201-го прототипа: {probability_success:.4f} или {probability_success*100:.2f}%\")\n\n# Доверительный интервал\nbeta_dist = stats.beta(alpha_posterior, beta_posterior)\nci_lower, ci_upper = beta_dist.interval(0.95)\nprint(f\"95% доверительный интервал: [{ci_lower:.4f}, {ci_upper:.4f}]\")",
+      "user": "anonymous",
+      "dateUpdated": "2025-11-11T11:18:23+0000",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "title": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1762856845970_1251123484",
+      "id": "paragraph_1762856845970_1251123484",
+      "dateCreated": "2025-11-11T10:27:25+0000",
+      "status": "FINISHED",
+      "focus": true,
+      "$$hashKey": "object:21382",
+      "dateFinished": "2025-11-11T10:45:38+0000",
+      "dateStarted": "2025-11-11T10:45:38+0000",
+      "title": "Доп.задание 2",
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "Вероятность успеха 201-го прототипа: 0.0042 или 0.42%\n95% доверительный интервал: [0.0014, 0.0085]\n"
+          }
+        ]
+      }
+    }
+  ],
+  "name": "parallel_code_dataset",
+  "id": "2MB4K1BP2",
+  "defaultInterpreterGroup": "spark",
+  "version": "0.9.0",
+  "noteParams": {},
+  "noteForms": {},
+  "angularObjects": {},
+  "config": {
+    "isZeppelinNotebookCronEnable": false,
+    "looknfeel": "default",
+    "personalizedMode": "false"
+  },
+  "info": {
+    "isRunning": false
+  },
+  "path": "/parallel_code_dataset"
+}
