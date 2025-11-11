@@ -279,7 +279,6 @@ else:
     time_aggregation = None
 ```
 ![](/screen/7_1.png)
-
 ![](/screen/7_2.png)
 
 ### Аналитические метрики для числовой колонки
